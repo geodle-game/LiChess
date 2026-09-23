@@ -3,7 +3,6 @@ name: Lichess Bot
 on:
   workflow_dispatch:
   schedule:
-    # Fallback: fires every 6 hours in case the chain breaks.
     - cron: '0 */6 * * *'
 
 concurrency:
@@ -13,18 +12,14 @@ concurrency:
 jobs:
   run-bot:
     runs-on: ubuntu-latest
-    timeout-minutes: 355   # hard cap under GitHub's 360-minute limit
+    timeout-minutes: 355
 
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install deps
-        run: npm ci
+          node-version: '24'
 
       - name: Run bot for 5h30m
         env:
